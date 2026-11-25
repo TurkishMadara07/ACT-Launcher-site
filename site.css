@@ -4,7 +4,7 @@
   --pix:"Pixelify Sans","Courier New",monospace;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;transition:--glow .9s ease}
 *{box-sizing:border-box;margin:0}
 html{background:var(--bg);scroll-behavior:smooth;overflow-x:hidden}
-body{color:var(--text);font:400 1.0625rem/1.65 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{color:var(--text);font:400 1.0625rem/1.65 var(--font);-webkit-font-smoothing:antialiased;overflow-x:clip}
 a{color:inherit}img,video{display:block;max-width:100%;height:auto}
 :focus-visible{outline:3px solid #ffd84a;outline-offset:3px}
 .wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
@@ -110,3 +110,42 @@ body.doc footer a{color:var(--mute)}
   dl{grid-template-columns:minmax(0,1fr)}.big span{width:70px;height:70px}
 }
 @media (prefers-reduced-motion:reduce){.amb i{animation:none;display:none}.js .rv{opacity:1;translate:none;transition:none}.stage .frame{transform:none}:root{transition:none}html{scroll-behavior:auto}}
+
+/* ---- sinematik katman: gren, vinyet, logo ---- */
+body::before{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.amb::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 40%,transparent 50%,rgba(0,0,0,.6))}
+.brand img{height:36px;width:auto;filter:drop-shadow(0 0 14px color-mix(in srgb,var(--glow) 70%,transparent))}
+
+/* ---- açılış sahnesi: videodaki akış (soru, adımlar, vazgeçme, blok geçişi, uygulama, logo) ---- */
+.story{height:480vh;position:relative}
+.pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.beat{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;padding:0 1.25rem;opacity:0;pointer-events:none;will-change:opacity,transform}
+.b1{opacity:1}
+.k{font:800 clamp(2.5rem,8.6vw,6.8rem)/1.02 var(--font);letter-spacing:-.035em;max-width:13ch;text-wrap:balance}
+.k em,.b4 h1 em{font-style:normal;color:var(--acc);text-shadow:0 0 70px color-mix(in srgb,var(--glow) 80%,transparent)}
+.fail{color:#FF7A93;text-shadow:0 0 70px rgba(255,90,120,.55)}
+.chip{position:absolute;left:50%;top:50%;translate:calc(-50% + var(--x)) calc(-50% + var(--y));rotate:var(--r);padding:.55rem 1.1rem;border:1px solid var(--line);border-radius:12px;
+  background:rgba(20,20,31,.85);color:var(--mute);font-weight:600;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.4);animation:bobc 6s ease-in-out infinite}
+@keyframes bobc{50%{translate:calc(-50% + var(--x)) calc(-50% + var(--y) - 12px)}}
+.grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(var(--c,12),1fr);grid-template-rows:repeat(var(--r,8),1fr);gap:6px;padding:6px;pointer-events:none}
+.grid i{background:var(--pri);opacity:0;border-radius:3px}.grid i:nth-child(3n){background:#5a34b4}.grid i:nth-child(5n){background:#9a7bf0}
+.device{position:relative;width:min(1000px,92vw);perspective:1400px}
+.device .frame{transform:rotateX(var(--rx,0deg));transform-origin:50% 100%}
+.pill{position:absolute;left:50%;bottom:-1.3rem;translate:-50% 0;padding:.65rem 1.4rem;border-radius:999px;background:var(--pri);color:#fff;font-weight:700;white-space:nowrap;box-shadow:0 10px 40px color-mix(in srgb,var(--glow) 60%,transparent),inset 0 1px 0 rgba(255,255,255,.3)}
+.logo{width:min(360px,64vw);height:auto;filter:drop-shadow(0 0 46px var(--glow));margin-bottom:1.4rem}
+.b4 h1{font:800 clamp(2.8rem,8vw,6.2rem)/1 var(--font);letter-spacing:-.035em}
+.b4 .lead{margin-top:1.3rem}
+.hint{position:absolute;bottom:1.3rem;left:50%;translate:-50% 0;color:var(--mute);font:700 .78rem var(--pix);letter-spacing:.22em;text-transform:uppercase;text-align:center}
+.hint::after{content:"";display:block;width:1px;height:36px;margin:.5rem auto 0;background:linear-gradient(var(--acc),transparent);animation:hint 1.8s ease-in-out infinite}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+html.static .story,html:not(.js) .story{height:auto}
+html.static .pin,html:not(.js) .pin{position:relative;height:auto;min-height:100svh;display:grid;place-items:center;padding:6rem 0 3rem}
+html.static .beat:not(.b4),html:not(.js) .beat:not(.b4),html.static .grid,html:not(.js) .grid,html.static .hint,html:not(.js) .hint{display:none}
+html.static .b4,html:not(.js) .b4{position:relative;opacity:1;pointer-events:auto}
+
+/* özellik kareleri: yüzen çerçeve + videodaki gibi alt yazı hapı */
+.fw{position:relative;animation:bobf 8s ease-in-out infinite}.feat:nth-of-type(even) .fw{animation-delay:-4s}
+@keyframes bobf{50%{translate:0 -10px}}
+.fw .pill{bottom:-1.1rem}
+h2{font-size:clamp(2.2rem,5.6vw,4rem)}
+@media (prefers-reduced-motion:reduce){.chip,.fw,.hint::after{animation:none}}
